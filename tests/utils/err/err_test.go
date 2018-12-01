@@ -8,9 +8,9 @@ import (
 
 func TestErrUtil(t *testing.T) {
 	if errutil.CheckError(nil, "") {
-		fmt.Println("errutil error")
+		t.Fatal("errutil error")
 	}
 	if !errutil.CheckError(fmt.Errorf("test err msg"), "test head") {
-		fmt.Println("errutil error")
+		t.Fatal("errutil error")
 	}
 }

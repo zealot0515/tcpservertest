@@ -1,11 +1,12 @@
 package conf_test
 
 import (
-	"fmt"
 	"tcpservertest/utils/conf"
 	"testing"
 )
 
 func TestConf(t *testing.T) {
-	fmt.Println(conf.Conf)
+	if conf.Conf.TCPPort != 6666 {
+		t.Fatal("config error")
+	}
 }

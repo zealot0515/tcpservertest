@@ -3,15 +3,16 @@ package main
 import (
 	"fmt"
 	"sync"
+	"tcpservertest/cmds"
 	"tcpservertest/server/tcpserver"
 	"tcpservertest/utils/conf"
 )
 
 func main() {
 	var hostAddr = fmt.Sprintf("localhost:%d", conf.Conf.TCPPort)
-	go tcpserver.Serve(hostAddr)
+	var server = tcpserver.NewServer(hostAddr, cmds.CmdEntry)
 	var wg sync.WaitGroup
 	wg.Add(1)
-	fmt.Println("server started")
+	fmt.Println("server started:", server)
 	wg.Wait()
 }
