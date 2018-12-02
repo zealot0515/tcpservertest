@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 	"tcpservertest/cmds"
+	_ "tcpservertest/cmds/queryapi1"
 	"tcpservertest/server/tcpserver"
 	"tcpservertest/utils/conf"
 )
