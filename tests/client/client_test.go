@@ -17,7 +17,7 @@ func TestClient(t *testing.T) {
 	})
 	if client != nil {
 		for i := 0; i < 10; i++ {
-			client.Send("Hello server!\n")
+			client.Send("queryapi1,param1,param2\n")
 			wg.Add(1)
 		}
 	} else {

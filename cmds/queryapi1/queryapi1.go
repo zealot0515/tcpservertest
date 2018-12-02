@@ -1,11 +1,34 @@
 package queryapi1
 
-import "tcpservertest/cmds"
+import (
+	"fmt"
+	"math"
+	"math/rand"
+	"tcpservertest/client/httprequest"
+	"tcpservertest/cmds"
+	"tcpservertest/utils/errutil"
+	"time"
+)
+
+var r *rand.Rand
 
 func queryApi1(params []string) string {
-	return "bbb"
+	var req = &httprequest.ReqParams{
+		Method: "GET",
+		URI:    "http://127.0.0.1:7777/v1/demo/demoapi",
+		Body:   "",
+		QueryParams: map[string]string{
+			"randomstring": fmt.Sprintf("%d", r.Int63n(math.MaxInt64)),
+		},
+	}
+	body, err := httprequest.SendRequest(req)
+	if errutil.CheckError(err, "send http req err") {
+		return "fail"
+	}
+	return string(body)
 }
 
 func init() {
+	r = rand.New(rand.NewSource(time.Now().UTC().Unix()))
 	cmds.RegistCmdHandler("queryapi1", queryApi1)
 }
