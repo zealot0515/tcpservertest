@@ -20,6 +20,8 @@ func TestClient(t *testing.T) {
 			client.Send("queryapi1,param1,param2\n")
 			wg.Add(1)
 		}
+		client.Send("quit\n")
+		wg.Add(1)
 	} else {
 		t.Fatal("can't get clinet, check connectioin")
 	}

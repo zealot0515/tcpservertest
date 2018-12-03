@@ -1,6 +1,7 @@
 package queryapi1
 
 import (
+	"encoding/json"
 	"fmt"
 	"math"
 	"math/rand"
@@ -25,7 +26,12 @@ func queryApi1(params []string) string {
 	if errutil.CheckError(err, "send http req err") {
 		return "fail"
 	}
-	return string(body)
+	var result = map[string]string{}
+	err = json.Unmarshal(body, &result)
+	if errutil.CheckError(err, "api unmarshal err") {
+		return "fail"
+	}
+	return result["returnstring"]
 }
 
 func init() {

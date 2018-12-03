@@ -3,6 +3,7 @@ package tcpclient
 import (
 	"fmt"
 	"net"
+	"strings"
 	"tcpservertest/utils/errutil"
 )
 
@@ -41,6 +42,11 @@ func (c *TCPClient) waitReceive() {
 		if errutil.CheckError(err, "client conn read error") {
 			return
 		}
-		c.receiveCallback(string(buffer[:len]))
+		var receiveMsgs = strings.Split(string(buffer[:len]), "\n")
+		for _, msg := range receiveMsgs {
+			if msg != "" {
+				c.receiveCallback(msg)
+			}
+		}
 	}
 }

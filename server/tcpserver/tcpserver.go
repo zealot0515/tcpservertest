@@ -48,9 +48,15 @@ func (s *TCPServer) connectionHandler(conn net.Conn) {
 		fmt.Println("get cmds:", cmds)
 		for _, cmd := range cmds {
 			if cmd != "" {
-				var rtnMsg = s.callback(cmd)
-				fmt.Println("rtn:", rtnMsg)
-				conn.Write([]byte(rtnMsg))
+				if cmd == "quit" {
+					conn.Write([]byte("Bye!\n"))
+					conn.Close()
+					return
+				} else {
+					var rtnMsg = s.callback(cmd)
+					fmt.Println("rtn:", rtnMsg)
+					conn.Write([]byte(rtnMsg + "\n"))
+				}
 			}
 		}
 	}
