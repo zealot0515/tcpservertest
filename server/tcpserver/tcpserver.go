@@ -8,8 +8,10 @@ import (
 )
 
 type TCPServer struct {
-	listener net.Listener
-	callback func(string) string
+	listener         net.Listener
+	sessionIdCounter int64
+	sessionMap       map[int64]net.Conn
+	callback         func(string) string
 }
 
 func NewServer(hostAddr string, onCmdFunc func(string) string) (tcpserver *TCPServer) {
@@ -26,21 +28,30 @@ func NewServer(hostAddr string, onCmdFunc func(string) string) (tcpserver *TCPSe
 }
 
 func (s *TCPServer) Serve() {
+	s.sessionMap = map[int64]net.Conn{}
+	s.sessionIdCounter = 0
 	for {
 		conn, err := s.listener.Accept()
 		if errutil.CheckError(err, "connect accept err ") {
 			continue
 		}
+		s.sessionIdCounter++
 		fmt.Println(conn.RemoteAddr().String(), " client connect success")
-		go s.connectionHandler(conn)
+		go s.connectionHandler(conn, s.sessionIdCounter)
+		s.sessionMap[s.sessionIdCounter] = conn
 	}
 }
 
-func (s *TCPServer) connectionHandler(conn net.Conn) {
+func (s *TCPServer) SessionCount() int {
+	return len(s.sessionMap)
+}
+
+func (s *TCPServer) connectionHandler(conn net.Conn, id int64) {
 	buffer := make([]byte, 2048)
 	for {
 		len, err := conn.Read(buffer)
 		if errutil.CheckError(err, "conn read error") {
+			delete(s.sessionMap, id)
 			return
 		}
 		var cmds = strings.Split(string(buffer[:len]), "\n")
@@ -51,6 +62,7 @@ func (s *TCPServer) connectionHandler(conn net.Conn) {
 				if cmd == "quit" {
 					conn.Write([]byte("Bye!\n"))
 					conn.Close()
+					delete(s.sessionMap, id)
 					return
 				} else {
 					var rtnMsg = s.callback(cmd)

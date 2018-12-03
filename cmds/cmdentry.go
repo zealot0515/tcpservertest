@@ -3,6 +3,7 @@ package cmds
 import (
 	"fmt"
 	"strings"
+	"tcpservertest/utils/serverinfo"
 )
 
 var handlerMap = map[string]func([]string) string{}
@@ -15,6 +16,7 @@ func CmdEntry(cmd string) string {
 	var rtnStr = "cmd not found"
 	if handlerFunc, ok := handlerMap[header]; ok {
 		rtnStr = handlerFunc(params)
+		serverinfo.UpdateInfo("cmdExecCount", 1, false)
 	}
 	return rtnStr
 }
