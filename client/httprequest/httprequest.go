@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strings"
 	"tcpservertest/utils/errutil"
+	"time"
 )
 
 type ReqParams struct {
@@ -18,7 +19,9 @@ type ReqParams struct {
 
 func SendRequest(req *ReqParams) (body []byte, err error) {
 	if req.URI != "" {
-		httpClient := &http.Client{}
+		httpClient := &http.Client{
+			Timeout: 5 * time.Second,
+		}
 		urlParam := url.Values{}
 		for k, v := range req.QueryParams {
 			urlParam.Add(k, v)

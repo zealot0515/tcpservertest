@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"net"
 	"strings"
+	"sync"
 	"tcpservertest/utils/errutil"
 )
 
 type TCPServer struct {
 	listener         net.Listener
 	sessionIdCounter int64
+	sessionMapLock   sync.Mutex
 	sessionMap       map[int64]net.Conn
 	callback         func(string) string
 }
@@ -38,7 +40,9 @@ func (s *TCPServer) Serve() {
 		s.sessionIdCounter++
 		fmt.Println(conn.RemoteAddr().String(), " client connect success")
 		go s.connectionHandler(conn, s.sessionIdCounter)
+		s.sessionMapLock.Lock()
 		s.sessionMap[s.sessionIdCounter] = conn
+		s.sessionMapLock.Unlock()
 	}
 }
 
@@ -51,7 +55,9 @@ func (s *TCPServer) connectionHandler(conn net.Conn, id int64) {
 	for {
 		len, err := conn.Read(buffer)
 		if errutil.CheckError(err, "conn read error") {
+			s.sessionMapLock.Lock()
 			delete(s.sessionMap, id)
+			s.sessionMapLock.Unlock()
 			return
 		}
 		var cmds = strings.Split(string(buffer[:len]), "\n")
@@ -62,7 +68,9 @@ func (s *TCPServer) connectionHandler(conn net.Conn, id int64) {
 				if cmd == "quit" {
 					conn.Write([]byte("Bye!\n"))
 					conn.Close()
+					s.sessionMapLock.Lock()
 					delete(s.sessionMap, id)
+					s.sessionMapLock.Unlock()
 					return
 				} else {
 					var rtnMsg = s.callback(cmd)

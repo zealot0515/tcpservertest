@@ -8,7 +8,7 @@ import (
 
 type Info struct {
 	Key   string
-	Value int
+	Value interface{}
 }
 
 type PageData struct {
@@ -27,7 +27,7 @@ func ServeWeb() {
 
 func updateInfo() PageData {
 	var infos = []Info{}
-	for k, v := range serverinfo.ServerInfos {
+	for k, v := range serverinfo.QueryServerInfo() {
 		infos = append(infos, Info{
 			Key:   k,
 			Value: v,

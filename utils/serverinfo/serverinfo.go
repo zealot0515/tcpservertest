@@ -1,11 +1,17 @@
 package serverinfo
 
-var ServerInfos = map[string]int{}
+var serverInfoFuncs = map[string]func() interface{}{}
 
-func UpdateInfo(infoKey string, diffValue int, reset bool) {
-	if reset {
-		ServerInfos[infoKey] = diffValue
-	} else {
-		ServerInfos[infoKey] += diffValue
+func RegistInfo(infoKey string, infoFunc func() interface{}) {
+	if _, ok := serverInfoFuncs[infoKey]; !ok {
+		serverInfoFuncs[infoKey] = infoFunc
 	}
+}
+
+func QueryServerInfo() map[string]interface{} {
+	var rtnInfo = map[string]interface{}{}
+	for k, v := range serverInfoFuncs {
+		rtnInfo[k] = v()
+	}
+	return rtnInfo
 }
