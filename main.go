@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	var hostAddr = fmt.Sprintf("localhost:%d", conf.Conf.TCPPort)
+	var hostAddr = fmt.Sprintf("0.0.0.0:%d", conf.Conf.TCPPort)
 	var server = tcpserver.NewServer(hostAddr, cmds.CmdEntry)
 	serverinfo.RegistInfo("sessionCount", func() interface{} {
 		return server.SessionCount()

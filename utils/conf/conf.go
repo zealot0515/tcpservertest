@@ -7,7 +7,8 @@ import (
 )
 
 type Config struct {
-	TCPPort int `json:"tcpport"`
+	TCPPort int    `json:"tcpport"`
+	APIHost string `json:"apihost"`
 }
 
 var Conf *Config

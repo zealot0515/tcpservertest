@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"tcpservertest/client/httprequest"
 	"tcpservertest/cmds"
+	"tcpservertest/utils/conf"
 	"tcpservertest/utils/errutil"
 	"tcpservertest/utils/serverinfo"
 	"tcpservertest/utils/timeutil"
@@ -14,6 +15,7 @@ import (
 )
 
 var r *rand.Rand
+var apiHost string
 var lastExecTime = int64(-1)
 
 func queryApi1(params []string) string {
@@ -21,7 +23,7 @@ func queryApi1(params []string) string {
 	tracker.Begin()
 	var req = &httprequest.ReqParams{
 		Method: "GET",
-		URI:    "http://127.0.0.1:7777/v1/demo/demoapi",
+		URI:    apiHost,
 		Body:   "",
 		QueryParams: map[string]string{
 			"randomstring": fmt.Sprintf("%d", r.Int63n(math.MaxInt64)),
@@ -45,6 +47,7 @@ func init() {
 	r = rand.New(rand.NewSource(time.Now().UTC().Unix()))
 	cmds.RegistCmdHandler("queryapi1", queryApi1)
 	registCmdApiInfoFunc()
+	apiHost = "http://" + conf.Conf.APIHost + "/v1/demo/demoapi"
 }
 
 func logApiResponseTime(tracker timeutil.TimeTracker) {
