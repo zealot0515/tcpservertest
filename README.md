@@ -7,7 +7,14 @@ server status can be check at serverhost:8080/info
 
 there are three binarys in bin folder, can use it to make a quick run at linux x64 system
 # QuickRun
+```
+linux x64
 exec runtest.sh in bin folder
+```
+```
+windows
+exec runtest.bat in bin folder
+```
 it will create local demoapi, tcpserver, and 10 botclient to test
 check http://localhost:8080/info 
 can see it's status
