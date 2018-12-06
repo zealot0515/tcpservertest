@@ -49,5 +49,5 @@ see bin/botclient/start_10_bot.sh
 #!/bin/sh
 cd "$(dirname "$0")"
 ./simplebot startmultibot 127.0.0.1:6666 sockettest 10
-#						  serverhost:port  bot_use_state  bot_create_count
+#			serverhost:port  bot_use_state  bot_create_count
 ```
