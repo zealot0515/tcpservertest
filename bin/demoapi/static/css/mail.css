@@ -1,0 +1,128 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	font-family: 微软雅黑;
+}
+h2{
+	background-image: url(/static/img/mail/title-bg.png);
+	background-repeat:repeat-x;
+	background-size: contain;
+	border-radius: 7px;
+	border:solid 3px #d6b53c;
+	font-size: 22px;
+	color: #fff;
+	padding: 6px 0;
+	margin-top: 8px;
+}
+.container-fluid{
+	background-color: #f7f7f7;
+}
+.badge{
+	float: none;
+    padding: 5px 10px;
+	margin-right: 5px;
+    font-size: inherit;
+	background-color: #639bfc;
+}
+.t-title .btn{
+	background-image: url(/static/img/mail/btn-bg.png);
+	border-radius: 15px;
+	border: solid 2px #9c9bab;
+	box-shadow: 0 2px 2px #a6aebb;
+	color: #525159;
+	font-weight: 700;
+}
+.panel-group {
+    margin-top: 0px;	
+}
+.panel-body {
+    padding: 5px 10px;
+	background-color: #fff;
+	border-radius: 10px;
+	position: relative;
+}
+.gift-icon{
+	width: 13%;
+	max-width: 150px;
+	margin-right: 5px;
+}
+.gift-icon img{
+	width: 100%;
+}
+.g-li{
+	width: calc(69% - 5px);
+	margin-right: 5px;
+	margin-bottom: 0;
+}
+.g-li li p{
+	margin-bottom: 0;
+}
+.g-li li p:first-child{
+	margin-right: 10px;
+	margin-top: 5px;
+}
+.g-li li{
+	position: relative;
+}
+.g-li li:last-child{
+	height: 42px;
+}
+.g-li li p:last-child{
+	position: absolute;
+	right: 0;
+	top: 8px;
+}
+.list-group-item {
+	border: none;
+    border-bottom: 2px dotted #c4cdd8;
+}
+.btn-warning{
+	background-image: url(/static/img/mail/get-bg.png);
+	border: solid 2px #d6b53c;
+	border-radius: 10px;
+	padding: 10px 25px;
+	box-shadow: 0 2px 2px #a6aebb;
+	font-weight: 700;
+	font-size: 16px;	
+}
+.panel-body .btn-warning{
+	position: absolute;
+	bottom: 32px;
+}
+.conclue{
+	margin-bottom: 20px;
+}
+.conclue .btn{
+	min-width: 120px;
+}
+.conclue .btn:first-child{
+	margin-right: 10px;
+	background-image: url(/static/img/mail/cancel-bg.png);
+	color: #525159;
+}
+.list-group-item {
+    padding: 2px 15px;
+}
+@media(max-width:1024px){
+	.panel-group{
+		height: 270px;
+    	overflow: scroll;
+	}
+}
+@media (max-width:667px){
+	.gift-icon {
+    	margin-top: 20px;
+	}
+}
+@media (max-width:568px){
+	.panel-body .btn-warning{
+		position: static;
+		margin-left: calc(50% - 45px);
+	}
+}
+@media only screen and (min-width : 1025px){
+	.panel-group{
+		max-height:75vh;
+		overflow: scroll;
+	}
+}

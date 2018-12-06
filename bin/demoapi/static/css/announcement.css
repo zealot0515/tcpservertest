@@ -1,0 +1,95 @@
+@charset "utf-8";
+/* CSS Document */
+.panel-body{
+	display: -ms-flexbox; 
+    display: -webkit-flex; 
+    display: flex; 
+}
+.panel-group {
+    margin-top: 0px;
+	height: auto;
+}
+.sameHeight{ 
+    -webkit-flex: 1; 
+    -ms-flex: 1; 
+    flex: 1; 
+}
+.info-title{
+	font-weight: 700;
+	font-size: 22px;
+}
+.info-time{
+	font-weight: 700;
+	font-size: 16px;
+}
+.g-li {
+    width: calc(75% - 5px);
+	margin-bottom: 0;
+}
+.more{
+	width: 5%;
+}
+.more img{
+	width:70%;
+	margin-top:45%;
+	margin-left: 8px;
+	cursor: pointer;
+}
+.panel-default{
+	padding: 10px;
+}
+.panel-body{
+	border: solid 2px #909bc7;
+	margin-bottom: 10px;
+}
+.panel-body:last-child{
+	margin-bottom: 5px;
+}
+/*popup css*/
+.p-popup{
+	position: relative;
+	display: none;
+}
+.p-popup .info-title{
+	padding-top: 45px;
+}
+.p-date{
+	position: absolute;
+    right: 5px;
+    top: -5px;
+    font-size: 16px;
+    font-weight: 500;
+}
+.p-popup  .g-li{
+	width: 100%;
+}
+.p-popup .g-li li:last-child{
+	height: auto;
+}
+.back-btn{
+	margin-right: 5px;
+	position: absolute;
+	top: -5px;
+	left: -5px;
+}
+.back-btn img{
+	width: 50px;
+	cursor: pointer;
+}
+.info-content{
+	font-size: 16px;
+	line-height: 40px;
+}
+@media (max-width: 667px){
+.gift-icon {
+    margin-top: 5px;
+	}
+}
+@media only screen and (min-width : 1025px){
+	.more img {
+    width: 40%;
+    margin-top: 50%;
+    margin-left: 20px;
+    cursor: pointer;
+	}
+}

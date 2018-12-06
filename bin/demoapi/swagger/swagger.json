@@ -1,0 +1,48 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "beego Test API",
+        "description": "beego has a very cool tools to autogenerate documents for your API",
+        "version": "1.0.0",
+        "termsOfService": "http://beego.me/",
+        "contact": {
+            "email": "astaxie@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "basePath": "/v1",
+    "paths": {
+        "/demo/demoapi": {
+            "get": {
+                "tags": [
+                    "demo"
+                ],
+                "description": "DemoAPI for test",
+                "operationId": "DemoController.DemoApi",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "randomstring",
+                        "description": "random string",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "demo",
+            "description": "DemoController Operations about Bank\n"
+        }
+    ]
+}
