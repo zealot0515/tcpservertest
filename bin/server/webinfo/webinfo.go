@@ -3,6 +3,7 @@ package webinfo
 import (
 	"html/template"
 	"net/http"
+	"sort"
 	"tcpservertest/utils/serverinfo"
 )
 
@@ -26,12 +27,19 @@ func ServeWeb() {
 }
 
 func updateInfo() PageData {
+	var infosMap = map[string]Info{}
 	var infos = []Info{}
+	var keys = []string{}
 	for k, v := range serverinfo.QueryServerInfo() {
-		infos = append(infos, Info{
+		keys = append(keys, k)
+		infosMap[k] = Info{
 			Key:   k,
 			Value: v,
-		})
+		}
+	}
+	sort.Strings(keys)
+	for _, k := range keys {
+		infos = append(infos, infosMap[k])
 	}
 	return PageData{
 		Infos: infos,

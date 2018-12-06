@@ -1,6 +1,14 @@
-<h1>tcpserver test info<h1>
-    <ul>
-        {{range .Infos}}
-            <li>{{.Key}}:{{.Value}}</li>
-        {{end}}
-    </ul>
+<html>
+    <head>
+    <title>tcpserver test info</title>
+    <meta http-equiv="refresh" content="1">
+    </head>
+    <body>
+        <h1>tcpserver test info<h1>
+            <ul>
+                {{range .Infos}}
+                    <li>{{.Key}}:{{.Value}}</li>
+                {{end}}
+            </ul>
+    </body>
+</html>

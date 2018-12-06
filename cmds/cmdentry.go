@@ -2,6 +2,7 @@ package cmds
 
 import (
 	"fmt"
+	"math"
 	"strings"
 	"tcpservertest/utils/serverinfo"
 	"time"
@@ -10,6 +11,8 @@ import (
 var handlerMap = map[string]func([]string) string{}
 var commandCountResetSetting = int64(100000)
 var commandCount = int64(0)
+var pendingCount = int64(0)
+var finishCommandCount = int64(0)
 var commandCountStartTimespin int64
 
 func CmdEntry(cmd string) string {
@@ -19,8 +22,9 @@ func CmdEntry(cmd string) string {
 	params = params[1:]
 	var rtnStr = "cmd not found"
 	if handlerFunc, ok := handlerMap[header]; ok {
+		beforeCommand()
 		rtnStr = handlerFunc(params)
-		addCommandCount()
+		afterCommand()
 	}
 	return rtnStr
 }
@@ -30,8 +34,31 @@ func RegistCmdHandler(cmdHeader string, handler func([]string) string) {
 }
 
 func init() {
-	serverinfo.RegistInfo("command per sec", commandPerSecInfo)
 	commandCount = commandCountResetSetting
+	pendingCount = 0
+	finishCommandCount = 0
+	serverinfo.RegistInfo("command per sec", func() interface{} {
+		return fmt.Sprintf("%d cmd/s", int(commandCount/(time.Now().UTC().Unix()-commandCountStartTimespin)))
+	})
+	serverinfo.RegistInfo("finish commands", func() interface{} {
+		return fmt.Sprintf("%d cmds", finishCommandCount)
+	})
+	serverinfo.RegistInfo("pending cmds", func() interface{} {
+		return fmt.Sprintf("%d cmds", pendingCount)
+	})
+}
+
+func beforeCommand() {
+	pendingCount++
+}
+
+func afterCommand() {
+	pendingCount--
+	finishCommandCount++
+	if finishCommandCount >= math.MaxInt64 {
+		finishCommandCount = 0
+	}
+	addCommandCount()
 }
 
 func addCommandCount() {
@@ -40,8 +67,4 @@ func addCommandCount() {
 		commandCount = 0
 		commandCountStartTimespin = time.Now().UTC().Unix()
 	}
-}
-
-func commandPerSecInfo() interface{} {
-	return fmt.Sprintf("%d cmd/s", int(commandCount/(time.Now().UTC().Unix()-commandCountStartTimespin)))
 }
