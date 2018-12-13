@@ -1,5 +1,4 @@
 # tcpservertest
-this is demo project for take home test
 
 i create a server with socket, receive client's cmd and send request to other server via http request
 
@@ -17,10 +16,6 @@ exec runtest.bat in bin folder
 ```
 it will create local demoapi, tcpserver, and 10 botclient to test
 check http://localhost:8080/info 
-can see it's status
-
-and i create a server on gcp, 
-http://pagitcptest.ddns.net:8080/info 
 can see it's status
 
 and also can change config let botclient connect to or let server send httprequest to that server
